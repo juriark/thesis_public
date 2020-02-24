@@ -123,7 +123,7 @@ def isEquivalentThickness(myBoolMask, temp200, temp1000, R_gas, g_acc, p_heights
         lat     = i[0]
         lon     = i[1]
         eastlon = i[1]+1 if not (lon == temp200.shape[1]-1) else 0  # else-statement, to account for discontinuity 
-        
+        #TODO:!
         t_virt_central      = temp200[lat,lon] * (1 + 0.61)
         t_mean_central      = 
         t_mean_east         =       
