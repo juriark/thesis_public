@@ -116,7 +116,6 @@ for year_idx in years:  # files come seperated by years -> open files of current
         colnc[nc_cntr,:,:]  = step1_2_boolMask
         nc_cntr             = nc_cntr + 1
         
-        
         '''
         # [step 4] Further Restrictions
         col_coordinate = np.array(np.argwhere(step1_2_boolMask == 1)) # get coordinates of COL points #step3_boolMask
