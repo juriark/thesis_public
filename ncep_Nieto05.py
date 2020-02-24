@@ -120,7 +120,7 @@ for year_idx in years:  # files come seperated by years -> open files of current
         nc_cntr             = nc_cntr + 1
         
         
-        '''
+        
         # [step 4] Further Restrictions
         col_coordinate = np.array(np.argwhere(step1_2_boolMask == 1)) # get coordinates of COL points #step3_boolMask
         
@@ -216,7 +216,7 @@ for year_idx in years:  # files come seperated by years -> open files of current
     #TODO: event_point erst ganz zum Schluss erstellen, wenns einmal durch die gesamte Zeitreihe gelaufen ist
     #TODO: southern hemisphere uwnd has to be in other direcntion!
     #TODO: Exclude systems that last only one day
-'''
+
 
 
 # Close .nc file
