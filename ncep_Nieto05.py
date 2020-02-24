@@ -4,6 +4,7 @@
 #from netCDF4 import Dataset
 import netCDF4 as nc4
 import numpy as np
+
 import f_ncep_Nieto05 as myFunc  
 import time
 import sys
@@ -67,6 +68,7 @@ for year_idx in years:  # files come seperated by years -> open files of current
         
         # get data of current time step
         gp200_timestep      = np.array(geopotential_200.variables['hgt'][timestep,:,:])
+        gp300_timestep      = np.array(geopotential_300.variables['hgt'][timestep,:,:])
         zonal_wind_timestep = np.array(zonal_wind_200.variables['uwnd'][timestep,:,:])
         temp_time200        = np.array(temp_200.variables['air'][timestep,:,:])
         temp_time300       = np.array(temp_300.variables['air'][timestep,:,:])
@@ -76,19 +78,14 @@ for year_idx in years:  # files come seperated by years -> open files of current
         #print(timestamp)
         
         
-        # [step 1.1] 300hPa minimum
+        # [step 1.1] 200hPa minimum
         step1_1_boolMask = myFunc.isLocalMin(gp200_timestep, 10, 6)
         print('Number of potential COL points after step[1.1]: ', np.sum(step1_1_boolMask))
         if not step1_1_boolMask.any():
             print('no potential COL points for this time step')
             continue
         
-        ''' #TODO:
-        heruntergeladene Daten haben Einzeit [m**2 s**-2]. In Nieto et al. [2005] wird ein threshold von 10gpm angegeben. Ist die
-        Einheit von gpm überhaupt m**2 s**-2?
-        Außerdem, Nieto verwenden 200 hPa, ich aber 300 hPa. Hier muss man wahrscheinlich einen anderen threshold nehmen
-        (Pinheiro et al. [2019] haben doch auch die Auswertung für 300 hPa gemacht. Was haben die für einen threshold?)
-        '''
+        #TODO:m**2 s**-2?
         
         # [step 1.2] condition of isolated cyclonic vortex
         step1_2_boolMask = myFunc.isIsolatedVortex(step1_1_boolMask, zonal_wind_timestep)
@@ -120,7 +117,7 @@ for year_idx in years:  # files come seperated by years -> open files of current
         nc_cntr             = nc_cntr + 1
         
         
-        
+        '''
         # [step 4] Further Restrictions
         col_coordinate = np.array(np.argwhere(step1_2_boolMask == 1)) # get coordinates of COL points #step3_boolMask
         
@@ -223,7 +220,7 @@ for year_idx in years:  # files come seperated by years -> open files of current
 col_pts = np.array(step1grp.variables['COL'][:])
 sumcol[:,:] = np.array(np.sum(col_pts,axis=0))
 step1grp.close()
-'''
+
 '''
 # open a file, where you want to store the data
 file = open('step1_results_entireNH_4ptadjacent', 'wb')
