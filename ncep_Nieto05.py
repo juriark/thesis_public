@@ -218,12 +218,12 @@ for year_idx in years:  # files come seperated by years -> open files of current
     #TODO: Exclude systems that last only one day
 
 
-
+'''
 # Close .nc file
 col_pts = np.array(step1grp.variables['COL'][:])
 sumcol[:,:] = np.array(np.sum(col_pts,axis=0))
 step1grp.close()
-
+'''
 '''
 # open a file, where you want to store the data
 file = open('step1_results_entireNH_4ptadjacent', 'wb')
